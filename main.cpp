@@ -4,25 +4,13 @@
 #include <iomanip>
 
 #include "GConstants.h"
+#include "options.h"
 #include "FormFactors.h"
 #include "SpecialFunctions.h"
 
 double find_LH_free(const double& eK, const double& qSq);
 double find_DCS_free_cosTheta(const double& eK, const double& cosTheta);
 double find_DCS_free_cosTheta_RC(const double& eK, const double& cosTheta);
-
-
-///--------------options-------------------------------------------------------
-
-    const bool switchAntineutrino( true );///true = antineutrino, false = neutrino
-    const NeutrinoFlav flav( flav_e );///set the neutrino flavor, flav_e = electron, flav_mu = muon, flav_tau = tau, flav_mless = massless
-    const bool switchMassDifference( true );///take into account the neutron-proton mass difference, true = yes, false = no
-    const bool switchCVC( true );///conservation of the vector current, true = Ankowski, false = Strumia&Vissani
-    const bool switchRC( true );///radiative corrections, only for electron neutrino, true = yes, false = no
-
-    const double neutrinoE( 2.0*MeV );///neutrino energy
-    const int cosThetaRes(200);///cosTheta resolution
-    std::ofstream result( "dcs.txt" );///output-file name
 
 ///----------------------------------------------------------------------------
 
@@ -147,6 +135,9 @@ double find_DCS_free_cosTheta(const double& eK, const double& cosTheta)
 
 
 double find_DCS_free_cosTheta_RC(const double& eK, const double& abscissaValue)
+    // Differential cross-section with radiative corrections. 
+    // eK is (anti)neutrino energy in MeV. 
+    // abscissaValue is converted into the cosine of the angle between (anti)neutrino and positron.
 {
     if ( not (flav == flav_e) )
         return find_DCS_free_cosTheta( eK, abscissaValue );
