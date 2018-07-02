@@ -8,9 +8,11 @@
 #include "FormFactors.h"
 #include "SpecialFunctions.h"
 
-double find_LH_free(const double& eK, const double& qSq);
-double find_DCS_free_cosTheta(const double& eK, const double& cosTheta);
-double find_DCS_free_cosTheta_RC(const double& eK, const double& cosTheta);
+extern "C" {
+    double find_LH_free(const double& eK, const double& qSq);
+    double find_DCS_free_cosTheta(const double& eK, const double& cosTheta);
+    double find_DCS_free_cosTheta_RC(const double eK, const double cosTheta);
+}
 
 ///----------------------------------------------------------------------------
 
@@ -134,7 +136,7 @@ double find_DCS_free_cosTheta(const double& eK, const double& cosTheta)
 }
 
 
-double find_DCS_free_cosTheta_RC(const double& eK, const double& abscissaValue)
+double find_DCS_free_cosTheta_RC(const double eK, const double abscissaValue)
     // Differential cross-section with radiative corrections. 
     // eK is (anti)neutrino energy in MeV. 
     // abscissaValue is converted into the cosine of the angle between (anti)neutrino and positron.

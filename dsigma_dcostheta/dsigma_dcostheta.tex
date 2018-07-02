@@ -1,0 +1,26 @@
+\begin{tikzpicture}
+\begin{axis} [
+    xmax = 1,
+    xmin = -1,
+    ymin = 0,
+    xlabel=$\cos \theta$, 
+    legend pos=south east,
+]
+    \addplot [
+        smooth, 
+        % hist = {bins=200, density},
+        % const plot,
+        domain=-1:1,
+    ] table [header=false] {dsigma_dcostheta_norm_Enu_2MeV.txt}
+    ;
+    \addplot [
+        smooth,
+        domain=-1:1,
+        dotted,
+    ] table [header=false] {dsigma_dcostheta_norm_Enu_4MeV.txt}
+    ;
+    \addlegendentry{$E_\nu$ = 2 MeV}
+    \addlegendentry{$E_\nu$ = 4 MeV}
+\end{axis}
+\end{tikzpicture}
+

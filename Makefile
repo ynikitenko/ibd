@@ -1,9 +1,12 @@
+all : main lib 
+
 lib : libibd.so.1
 
-Main :
-	@g++ -O3 -o $@.exe *.cpp 
+main : *.cpp *.h
+	@g++ -O3 -o $@ *.cpp 
+	@echo $@ done.
 
-libibd.so.1 :
+libibd.so.1 : main.cpp
 	@g++ -Wall -fPIC -c main.cpp
 	@g++ -shared -Wl,-soname,$@ -o $@ main.o
 	@echo $@ done.
@@ -11,6 +14,6 @@ libibd.so.1 :
 clean :
 	@rm -f *.o
 
-.PHONY : lib clean
+.PHONY : all lib clean
 # http://www.gnu.org/software/make/manual/make.html#Phony-Targets
 

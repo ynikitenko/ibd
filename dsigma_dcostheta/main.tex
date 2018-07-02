@@ -1,0 +1,13 @@
+\documentclass{article}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.11}
+
+% read input filename. TeX by Topic book, p. 246.
+{\endlinechar=-1 \global\read16 to \filename}
+
+\begin{document}
+    \input{\filename}
+\end{document}
+
