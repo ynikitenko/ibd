@@ -1,0 +1,27 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.11}
+
+\begin{document}
+\begin{tikzpicture}
+\begin{semilogyaxis} [
+    ymin = 0,
+    xlabel=$\mathrm E_\nu \lbrack \mathrm{MeV} \rbrack$, 
+    ylabel=$\mathrm{N}_\nu \left\lbrack \mathrm{MeV}^{-1}\mathrm{fission}^{-1} \right\rbrack$, 
+    legend pos=south east,
+]
+    \addplot [
+        smooth, 
+        dashed,
+    ] table [header=false] {sinev_al.txt}
+    ;
+    \addplot [
+        smooth,
+    ] table [header=false] {mueller_al.txt}
+    ;
+    \legend{Sinev et al, Mueller et al}
+\end{semilogyaxis}
+\end{tikzpicture}
+\end{document}
+
