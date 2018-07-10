@@ -1,0 +1,88 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.15}
+\usepgfplotslibrary{fillbetween}
+
+\begin{document}
+\begin{tikzpicture}
+\begin{axis} [
+    xlabel=$\mathrm{E_\nu \lbrack MeV \rbrack}$,
+    ylabel=$\mathrm P_{\nu_e \rightarrow \nu_e}$,
+    % ylabel=$\overline{\nu} survival probability$,
+    legend pos=south east,
+]
+    \addplot [
+        % name path=3sigma_min,
+        smooth, 
+        forget plot,
+    ] table [header=false] {nu_e_nu_e_sin2_theta13_dm2m0.txt}
+    ;
+    % \addlegendentry{$ \sin^2\theta_{13}$}
+    % \addlegendentry{Best fit values}
+
+    % 3 sigma sin^2 \theta13
+    \addplot [
+        name path=3sigma_min,
+        smooth, 
+        forget plot,
+    ] table [header=false] {nu_e_nu_e_sin2_theta13_3sigma_min.txt}
+    ;
+    \addplot [
+        name path=3sigma_max,
+        smooth, 
+        forget plot,
+    ] table [header=false] {nu_e_nu_e_sin2_theta13_3sigma_max.txt}
+    ;
+
+    % 5 sigma sin^2 \theta13
+    \addplot [
+        name path=5sigma_min,
+        smooth, 
+        forget plot,
+    ] table [header=false] {nu_e_nu_e_sin2_theta13_5sigma_min.txt}
+    ;
+    \addplot [
+        name path=5sigma_max,
+        smooth, 
+        forget plot,
+    ] table [header=false] {nu_e_nu_e_sin2_theta13_5sigma_max.txt}
+    ;
+
+    % 5 sigma sin^2 \theta13 and \delta m^2
+    \addplot [
+        name path=5sigma_min_deltam2_min,
+        smooth, 
+        dotted,
+        forget plot,
+    ] table [header=false] {nu_e_nu_e_sin2_theta13_5sigma_min_deltam2_5sigma_min.txt}
+    ;
+    \addplot [
+        name path=5sigma_max_deltam2_max,
+        smooth, 
+        forget plot,
+        dotted,
+    ] table [header=false] {nu_e_nu_e_sin2_theta13_5sigma_max_deltam2_5sigma_max.txt}
+    ;
+
+    % fill between
+    \addplot [lightgray, area legend] 
+        fill between [
+            of=5sigma_min_deltam2_min and 5sigma_max_deltam2_max,
+    ];
+    \addlegendentry{$5\sigma \sin^2\theta_{13}$ and $\Delta \mathrm m^2_{atm}$}
+
+    \addplot [cyan, area legend] fill between [
+        of=5sigma_min and 5sigma_max
+    ];
+    \addlegendentry{$5\sigma \sin^2\theta_{13}$}
+
+    \addplot [blue, area legend] fill between [
+        of=3sigma_min and 3sigma_max
+    ];
+    \addlegendentry{$3\sigma \sin^2\theta_{13}$}
+
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
