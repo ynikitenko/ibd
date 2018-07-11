@@ -12,7 +12,6 @@ extern "C" {
 
     double neutrinoE( 2.0*MeV );///neutrino energy
     int cosThetaRes(200);///cosTheta resolution
-    std::ofstream result( "dcs.txt" );///output-file name
 }
 // on extern keyword: https://en.cppreference.com/w/cpp/language/language_linkage
 
