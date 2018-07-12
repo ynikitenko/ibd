@@ -1,0 +1,26 @@
+\documentclass{article}
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.15}
+
+\begin{document}
+\begin{tikzpicture}
+\begin{axis} [
+    xmin = 0,
+    ymin = 0,
+    xlabel=$\mathrm{E_{\nu} \lbrack MeV \rbrack}$, 
+    ylabel=$\sigma$, 
+    % ylabel=$\sigma \lbrack 10^{-42} \mathrm{cm}^2 \rbrack$, 
+    legend pos=south east,
+]
+    \addplot [
+        smooth, 
+        % domain=-1:1,
+    ] table [header=false] {cs.txt}
+    ;
+    \addlegendentry{CVC}
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
