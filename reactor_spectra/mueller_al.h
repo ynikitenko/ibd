@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include "../utils.h"
 
 // Mueller et al., Improved Predictions of Reactor Antineutrino Spectra
 // Phys.Rev.C 83:054615, 2011. 
@@ -59,16 +60,31 @@ double get_spectrum_iso(double E_nu, enum ISO iso) {
 
 double get_spectrum(double E_nu) {
     double res = 0;
-    for (enum ISO iso = 0; iso < NISO; ++iso)
-        res += iso_fraction[iso] * get_spectrum_iso(E_nu, iso);
+    for (int iso = 0; iso < NISO; ++iso)
+        res += iso_fraction[iso] * get_spectrum_iso(E_nu, (enum ISO)iso);
     return res;
+}
+
+spectrum_vector *get_spectrum_vector() {
+    int nbins = (E_nu_max - E_nu_min) / step + 1; 
+    spectrum_vector *spectrum = new spectrum_vector(nbins);
+    // int i = 0;
+    // for (double E_nu = E_nu_min; E_nu <= E_nu_max; E_nu += step) {
+    for (int i = 0; i < nbins; ++i) {
+        double E_nu = E_nu_min + step * i;
+        double sp = get_spectrum(E_nu);
+        (*spectrum)[i].first = E_nu;
+        (*spectrum)[i].second = sp;
+        // ++i; 
+    }
+    return spectrum;
 }
 
 double *get_spectrum_arr() {
     printf("# Reactor spectrum for antineutrino energy\n");
     int nbins = (E_nu_max - E_nu_min) / step; 
     // double step = (E_nu_max - E_nu_min) / nbins;
-    double *spectrum = malloc((nbins + 1) * sizeof(double));
+    double *spectrum = (double *) malloc((nbins + 1) * sizeof(double));
     int i = 0;
     for (double E_nu = E_nu_min; E_nu <= E_nu_max; E_nu += step) {
     // for (int i = 0; i <= nbins; ++i) {
@@ -80,4 +96,6 @@ double *get_spectrum_arr() {
     }
     return spectrum;
 }
+
+#undef NISO
 

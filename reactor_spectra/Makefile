@@ -9,7 +9,7 @@ sinev_al: % : %.f90
 	@echo $@ done.
 
 mueller_al: % : %.c %.h
-	@gcc -o $@ -lm $^
+	@g++ -o $@ -lm $^
 	@echo $@ done.
 
 $(data) : %.txt : %
