@@ -72,6 +72,9 @@ const double finalNuclMassSq( finalNuclMass*finalNuclMass );
 
 
 double find_LH_free(const double& eK, const double& qSq)
+// The function calculating the contraction of the lepton and hadron tensors, corresponding to the expresion in the square brackets of Eq. (12),
+// that is M^4 A + M^2 B (s-u) + C (s- u)^2.
+// eK is the value of (anti)neutrino energy in MeV and qSq is the value of 4-momentum transfer squared, q^2, given in MeV^2.
 {
     static const double avNuclMass(   M   );
     static const double avNuclMassSq(   M2   );
@@ -124,6 +127,9 @@ double find_LH_free(const double& eK, const double& qSq)
 
 
 double find_DCS_free_cosTheta(const double& eK, const double& cosTheta)
+// The differential cross section as a function of cos(theta), given in unit 10^-38 cm^2,
+// calculated without radiative corrections.
+// eK is the value of (anti)neutrino energy in MeV and cosTheta is the value of cos(theta), theta being the charged lepton production angle.
 {
     static const double coeffCC(   GFcosTheta*GFcosTheta/(8*pi*initNuclMassSq)/(1.0e-38*cm2/MeV2)   );
     static const double mmm(   0.5*leptMassSq + 0.5*initNuclMassSq - 0.5*finalNuclMassSq   );
@@ -162,9 +168,12 @@ double find_DCS_free_cosTheta(const double& eK, const double& cosTheta)
 
 
 double find_DCS_free_cosTheta_RC(const double eK, const double abscissaValue)
-    // Differential cross-section with radiative corrections. 
-    // eK is (anti)neutrino energy in MeV. 
-    // abscissaValue is converted into the cosine of the angle between (anti)neutrino and positron.
+// The differential cross section as a function of cos(theta), given in unit 10^-38 cm^2,
+// calculated with radiative corrections.
+// The cos(theta) -even and cos(theta)-odd parts of the cross section are treated separately,
+// as they are subject to different outer radiative corrections.
+// eK is the value of (anti)neutrino energy in MeV 
+// abscissaValue is the value of cos(theta), theta being the charged lepton production angle.
 {
     if ( not (flav == flav_e) )
         return find_DCS_free_cosTheta( eK, abscissaValue );
