@@ -40,6 +40,7 @@ const int neutrinoERes(180);///energy resolution
 // std::ofstream result( "cs.txt" );///output-file name
 
 void print_sigma(const char *outfilename) {
+    // the result is given in 10^{-38} cm^2.
     std::ofstream result(outfilename);///output-file name
     const double cosThetaStep( 2.0/cosThetaRes );
     const double neutrinoEStep( (neutrinoEMax - neutrinoEMin)/neutrinoERes );

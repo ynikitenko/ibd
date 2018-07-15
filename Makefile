@@ -2,6 +2,9 @@ all : main lib cross_section.pdf
 
 lib : libibd.so.1
 
+cs.txt : main
+	@./$< 
+
 main : *.cpp *.h
 	@g++ -O3 -o $@ *.cpp 
 	@echo $@ done.
