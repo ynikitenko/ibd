@@ -1,0 +1,26 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.11}
+
+\begin{document}
+\begin{tikzpicture}
+%\begin{semilogyaxis} [
+\begin{axis} [
+    % ymin = 0,
+    xlabel=$\mathrm E_\nu \lbrack \mathrm{MeV} \rbrack$, 
+    % ylabel=$\mathrm{N}_{\mathrm{IBD}} \left\lbrack \mathrm{MeV}^{-1}\mathrm{fission}^{-1} \right\rbrack$, 
+    legend pos=south east,
+]
+    \addplot [
+        smooth, 
+        blue,
+        ultra thin,
+        % dashed,
+    ] table [header=false] {reactor_mult_cs_cvc_div_no_cvc.txt}
+    ;
+%\end{semilogyaxis}
+\end{axis}
+\end{tikzpicture}
+\end{document}
+
