@@ -20,9 +20,9 @@ enum ISO {
 // Options
 double iso_fraction[NISO] = {0.07, 0.3, 0.03, 0.6}; // isotope fractions in the whole flux
 
-double E_nu_min = 1.8; // minimum antineutrino energy in MeV
-double E_nu_max = 9.25; // maximum antineutrino energy in MeV
-double step = 0.01;
+extern double E_nu_min = 1.8; // minimum antineutrino energy in MeV
+extern double E_nu_max = 9.25; // maximum antineutrino energy in MeV
+extern double step = 0.01;
 // int nbins = 1200;       // precision of the spectrum. 
 // E_nu_max is evaluated. npoints = nbins + 1.
 
