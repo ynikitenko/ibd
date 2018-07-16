@@ -2,7 +2,7 @@ all : main lib cross_section.pdf
 
 lib : libibd.so.1
 
-cs.txt : main
+cs%.txt : main
 	@./$< 
 
 main : *.cpp *.h
@@ -14,7 +14,7 @@ libibd.so.1 : main.cpp
 	@g++ -shared -Wl,-soname,$@ -o $@ main.o
 	@echo $@ done.
 
-cross_section.pdf : %.pdf : %.tex cs.txt
+cross_section.pdf : %.pdf : %.tex cs.txt cs_no_cvc.txt cs_cvc.txt
 	@pdflatex $<
 	@echo $@ done.
 

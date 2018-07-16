@@ -34,31 +34,38 @@ void print_dsigma_dcostheta(const char *outfilename) {
 }
 
 // options for cross-section output
-const double neutrinoEMin( 2.0*MeV );///minimal neutrino energy
-const double neutrinoEMax( 20.0*MeV );///maximal neutrino energy
-const int neutrinoERes(180);///energy resolution
+extern double neutrinoEMin( 1.8*MeV );///minimal neutrino energy
+extern double neutrinoEMax( 20.0*MeV );///maximal neutrino energy
+extern int neutrinoERes(180);///energy resolution
 // std::ofstream result( "cs.txt" );///output-file name
 
-void print_sigma(const char *outfilename) {
-    // the result is given in 10^{-38} cm^2.
-    std::ofstream result(outfilename);///output-file name
+double get_sigma(double neutrinoE) {
+    // get total IBD cross section in 10^{-38} cm^2.
+    // neutrinoE is in MeV.
+    double cs(0.0);
+
+    // integrate on \cos\theta
     const double cosThetaStep( 2.0/cosThetaRes );
+    for (int lCnt(0); lCnt < cosThetaRes; ++lCnt)
+    {
+        const double cosTheta( -1.0 + (0.5 + lCnt)*cosThetaStep );
+        const double dcs = switchRC ? find_DCS_free_cosTheta_RC(neutrinoE, cosTheta) : find_DCS_free_cosTheta(neutrinoE, cosTheta);
+
+        cs += dcs;
+    }
+
+    cs *= cosThetaStep;
+    return cs;
+}
+
+void print_sigma(const char *outfilename) {
+    std::ofstream result(outfilename);///output-file name
     const double neutrinoEStep( (neutrinoEMax - neutrinoEMin)/neutrinoERes );
 
     for (int nCnt(0); nCnt <= neutrinoERes; ++nCnt )
     {
-        double cs(0.0), neutrinoE(neutrinoEMin + nCnt*neutrinoEStep);
-
-        for (int lCnt(0); lCnt < cosThetaRes; ++lCnt)
-        {
-            const double cosTheta( -1.0 + (0.5 + lCnt)*cosThetaStep );
-            const double dcs = switchRC ? find_DCS_free_cosTheta_RC(neutrinoE, cosTheta) : find_DCS_free_cosTheta(neutrinoE, cosTheta);
-
-            cs += dcs;
-        }
-
-        cs *= cosThetaStep;
-
+        double neutrinoE(neutrinoEMin + nCnt*neutrinoEStep);
+        double cs = get_sigma(neutrinoE);
         result<<std::showpoint<<std::fixed<<std::setw(5)<<std::setprecision(2)<<neutrinoE<<" "<<std::showpoint<<std::scientific<<std::setw(14)<<std::setprecision(5)<<cs<<std::endl;
     }
 }
